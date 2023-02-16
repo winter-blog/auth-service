@@ -1,7 +1,7 @@
 package com.devwinter.authservice.adapter.input.api.dto;
 
 import com.devwinter.authservice.application.port.input.AuthMemberUseCase;
-import com.devwinter.authservice.application.port.input.TokenGenerateUseCase.TokenDto;
+import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class MemberLogin {
     }
 
     @Getter
-    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Response {
         private String accessToken;
         private String grantType;

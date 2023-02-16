@@ -1,7 +1,7 @@
 package com.devwinter.authservice.utils;
 
 import com.devwinter.authservice.application.port.input.AuthMemberUseCase.AuthMemberDto;
-import com.devwinter.authservice.application.port.input.TokenGenerateUseCase.TokenDto;
+import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -37,7 +37,8 @@ public class JwtTokenProvider {
         Date accessTokenExpiresIn = new Date(now + accessTokenValidTime);
         String accessToken = Jwts.builder()
                                  .setSubject(member.email())
-                                 .setAudience(member.id().toString())
+                                 .setAudience(member.id()
+                                                    .toString())
                                  .setExpiration(accessTokenExpiresIn)
                                  .signWith(key, SignatureAlgorithm.HS256)
                                  .compact();
@@ -53,7 +54,7 @@ public class JwtTokenProvider {
                        .grantType("Bearer")
                        .accessToken(accessToken)
                        .refreshToken(refreshToken)
-                       .userId(member.id())
+                       .memberId(member.id())
                        .refreshTokenExpirationTime(this.refreshTokenValidTime)
                        .build();
     }

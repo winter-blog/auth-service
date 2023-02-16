@@ -1,6 +1,6 @@
 package com.devwinter.authservice.adapter.output.persistence.jwt;
 
-import com.devwinter.authservice.application.port.input.TokenGenerateUseCase.TokenDto;
+import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
