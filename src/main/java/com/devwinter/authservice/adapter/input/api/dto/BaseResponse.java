@@ -14,6 +14,10 @@ public class BaseResponse<T> {
         return new BaseResponse<>(Result.success(message), body);
     }
 
+    public static <T> BaseResponse<T> success(String message) {
+        return new BaseResponse<>(Result.success(message), null);
+    }
+
     public static BaseResponse<Void> error(String message) {
         return new BaseResponse<>(Result.fail(message), null);
     }
@@ -50,6 +54,5 @@ public class BaseResponse<T> {
 
             private final String description;
         }
-
     }
 }

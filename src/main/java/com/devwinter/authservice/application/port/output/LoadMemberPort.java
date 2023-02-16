@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface LoadMemberPort {
     Optional<Member> findByEmail(String email);
+    Optional<Member> findById(Long id);
 }

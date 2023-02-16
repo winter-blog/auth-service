@@ -22,4 +22,12 @@ public class MemberPersistenceAdapter implements LoadMemberPort {
 
         return Optional.ofNullable(memberMapper.entityToDomain(memberJpaEntity));
     }
+
+    @Override
+    public Optional<Member> findById(Long id) {
+        MemberJpaEntity memberJpaEntity = memberRepository.findById(id)
+                                                          .orElse(null);
+
+        return Optional.ofNullable(memberMapper.entityToDomain(memberJpaEntity));
+    }
 }
