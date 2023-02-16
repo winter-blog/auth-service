@@ -5,8 +5,7 @@ import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.Tok
 
 public interface JwtRedisRepository {
     void save(String email, TokenDto tokenInfoDto);
-
     boolean existRefreshToken(String email);
-
     void delete(String email);
+    String getRefreshToken(String email);
 }

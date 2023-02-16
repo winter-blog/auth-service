@@ -34,6 +34,12 @@ public class JwtRedisRepositoryImpl implements JwtRedisRepository {
         redisTemplate.delete(createKey(email));
     }
 
+    @Override
+    public String getRefreshToken(String email) {
+        return (String) redisTemplate.opsForValue()
+                            .get(createKey(email));
+    }
+
     private String createKey(String email) {
         return String.format("%s: %s", redis_key_prefix, email);
     }

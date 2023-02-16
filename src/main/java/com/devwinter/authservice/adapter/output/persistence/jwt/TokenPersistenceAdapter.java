@@ -3,6 +3,7 @@ package com.devwinter.authservice.adapter.output.persistence.jwt;
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
 import com.devwinter.authservice.application.port.output.DeleteRefreshTokenPort;
 import com.devwinter.authservice.application.port.output.ExistRefreshTokenPort;
+import com.devwinter.authservice.application.port.output.LoadRefreshTokenPort;
 import com.devwinter.authservice.application.port.output.SaveRefreshTokenPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,8 @@ import org.springframework.stereotype.Repository;
 public class TokenPersistenceAdapter implements
         SaveRefreshTokenPort,
         ExistRefreshTokenPort,
-        DeleteRefreshTokenPort {
+        DeleteRefreshTokenPort,
+        LoadRefreshTokenPort {
     private final JwtRedisRepository jwtRedisRepository;
     @Override
     public void save(String key, TokenDto tokenInfoDto) {
@@ -27,5 +29,10 @@ public class TokenPersistenceAdapter implements
     @Override
     public boolean exist(String key) {
         return jwtRedisRepository.existRefreshToken(key);
+    }
+
+    @Override
+    public String getRefreshToken(String key) {
+        return jwtRedisRepository.getRefreshToken(key);
     }
 }
