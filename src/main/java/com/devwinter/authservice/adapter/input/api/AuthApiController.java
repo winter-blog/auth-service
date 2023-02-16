@@ -1,18 +1,11 @@
 package com.devwinter.authservice.adapter.input.api;
 
-import com.devwinter.authservice.adapter.input.api.dto.BaseResponse;
-import com.devwinter.authservice.adapter.input.api.dto.MemberLogin;
-import com.devwinter.authservice.adapter.input.api.dto.MemberLogout;
-import com.devwinter.authservice.adapter.input.api.dto.MemberValid;
-import com.devwinter.authservice.application.port.input.AuthMemberUseCase;
-import com.devwinter.authservice.application.port.input.DeleteRefreshTokenUseCase;
-import com.devwinter.authservice.application.port.input.GenerateTokenUseCase;
+import com.devwinter.authservice.adapter.input.api.dto.*;
+import com.devwinter.authservice.application.port.input.*;
+import com.devwinter.authservice.application.port.input.AuthMemberUseCase.AuthMemberDto;
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
-import com.devwinter.authservice.application.port.input.GetMemberValidQuery;
 import com.devwinter.authservice.application.port.input.GetMemberValidQuery.ValidMemberDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,13 +17,14 @@ import java.util.Objects;
 public class AuthApiController {
 
     private final AuthMemberUseCase authMemberUseCase;
+    private final GetMemberValidQuery getMemberValidQuery;
     private final GenerateTokenUseCase generateTokenUseCase;
     private final DeleteRefreshTokenUseCase deleteRefreshTokenUseCase;
-    private final GetMemberValidQuery getMemberValidQuery;
+    private final ExistRefreshTokenValidUseCase existRefreshTokenValidUseCase;
 
     @PostMapping("/login")
     public BaseResponse<MemberLogin.Response> login(HttpServletResponse response, @Valid @RequestBody MemberLogin.Request request) {
-        AuthMemberUseCase.AuthMemberDto credential = authMemberUseCase.credential(request.toCommand());
+        AuthMemberDto credential = authMemberUseCase.credential(request.toCommand());
         TokenDto tokenDto = generateTokenUseCase.generate(credential);
 
         if (Objects.nonNull(tokenDto.memberId())) {
@@ -41,10 +35,24 @@ public class AuthApiController {
     }
 
     @PostMapping("/logout")
-    public BaseResponse<MemberLogout.Response> logout(@RequestHeader("email") String email) {
+    public BaseResponse<MemberLogout.Response> logout(@RequestHeader("Email") String email) {
         deleteRefreshTokenUseCase.delete(email);
         return MemberLogout.Response.success();
     }
+
+    @PostMapping("/refresh-token")
+    public BaseResponse<RefreshToken.Response> refreshToken(
+            @RequestHeader("MemberId") Long id,
+            @RequestHeader("Email") String email,
+            @RequestHeader("RefreshToken") String refreshToken) {
+
+        existRefreshTokenValidUseCase.valid(email, refreshToken);
+
+        AuthMemberDto authMemberDto = new AuthMemberDto(id, email);
+        TokenDto token = generateTokenUseCase.generate(authMemberDto);
+        return RefreshToken.Response.success(token);
+    }
+
 
     @GetMapping("/{memberId}/valid")
     public BaseResponse<MemberValid.Response> getMemberValid(@PathVariable Long memberId) {
