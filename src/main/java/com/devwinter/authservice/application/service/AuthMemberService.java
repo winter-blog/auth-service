@@ -21,7 +21,7 @@ public class AuthMemberService implements AuthMemberUseCase {
     public AuthMemberDto credential(AuthMemberCommand command) {
 
         Member member = loadMemberPort.findByEmail(command.email())
-                                      .orElseThrow();
+                                      .orElseThrow(() -> new AuthException(AuthErrorCode.MEMBER_NOT_FOUND));
 
         if(!passwordEncoder.matches(command.password(), member.getPassword())) {
             throw new AuthException(AuthErrorCode.MEMBER_PASSWORD_NOT_VALID);

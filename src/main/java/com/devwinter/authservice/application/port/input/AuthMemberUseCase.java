@@ -10,7 +10,7 @@ public interface AuthMemberUseCase {
 
     }
 
-    record AuthMemberDto(Long userId, String email) {
+    record AuthMemberDto(Long id, String email) {
         public static AuthMemberDto of(Member member) {
             return new AuthMemberDto(member.getId(), member.getEmail());
         }
