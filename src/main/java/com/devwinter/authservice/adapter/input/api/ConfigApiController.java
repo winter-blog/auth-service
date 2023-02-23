@@ -17,5 +17,4 @@ public class ConfigApiController {
     @GetMapping("/api/v1/auth/version")
     public String version() {
         return "@Value: " + version + ", Environment: " + env.getProperty("auth.version");
-    }
 }
