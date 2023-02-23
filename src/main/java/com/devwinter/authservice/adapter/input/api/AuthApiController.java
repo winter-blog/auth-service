@@ -6,6 +6,7 @@ import com.devwinter.authservice.application.port.input.AuthMemberUseCase.AuthMe
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
 import com.devwinter.authservice.application.port.input.GetMemberValidQuery.ValidMemberDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;

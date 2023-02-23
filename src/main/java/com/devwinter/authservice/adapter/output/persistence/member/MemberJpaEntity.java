@@ -14,11 +14,11 @@ import javax.persistence.*;
 @Table(name = "member")
 public class MemberJpaEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "member_id")
     private Long id;
 
     private String nickName;
     private String email;
     private String password;
-    private String profile;
 }
