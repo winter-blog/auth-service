@@ -6,7 +6,6 @@ import com.devwinter.authservice.application.port.input.AuthMemberUseCase.AuthMe
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
 import com.devwinter.authservice.application.port.input.GetMemberValidQuery.ValidMemberDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +41,7 @@ public class AuthApiController {
     }
 
     @PostMapping("/refresh-token")
-    public BaseResponse<RefreshToken.Response> refreshToken(
+    public BaseResponse<AccessTokenIssuance.Response> refreshToken(
             @RequestHeader("MemberId") Long id,
             @RequestHeader("Email") String email,
             @RequestHeader("RefreshToken") String refreshToken) {
@@ -51,7 +50,7 @@ public class AuthApiController {
 
         AuthMemberDto authMemberDto = new AuthMemberDto(id, email);
         TokenDto token = generateTokenUseCase.generate(authMemberDto);
-        return RefreshToken.Response.success(token);
+        return AccessTokenIssuance.Response.success(token);
     }
 
 

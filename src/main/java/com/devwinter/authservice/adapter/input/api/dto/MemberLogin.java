@@ -21,6 +21,7 @@ public class MemberLogin {
     @Getter
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Response {
+        private Long memberId;
         private String accessToken;
         private String grantType;
         private String refreshToken;
@@ -29,6 +30,7 @@ public class MemberLogin {
 
             return BaseResponse.success("로그인에 성공하였습니다.",
                     new Response(
+                            tokenDto.memberId(),
                             tokenDto.accessToken(),
                             tokenDto.grantType(),
                             tokenDto.refreshToken())
