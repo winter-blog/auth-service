@@ -15,9 +15,7 @@ import java.util.Objects;
 @RestController
 @RequiredArgsConstructor
 public class AuthApiController {
-
     private final AuthMemberUseCase authMemberUseCase;
-    private final GetMemberValidQuery getMemberValidQuery;
     private final GenerateTokenUseCase generateTokenUseCase;
     private final DeleteRefreshTokenUseCase deleteRefreshTokenUseCase;
     private final ExistRefreshTokenValidUseCase existRefreshTokenValidUseCase;
@@ -51,12 +49,5 @@ public class AuthApiController {
         AuthMemberDto authMemberDto = new AuthMemberDto(id, email);
         TokenDto token = generateTokenUseCase.generate(authMemberDto);
         return AccessTokenIssuance.Response.success(token);
-    }
-
-
-    @GetMapping("/{memberId}/valid")
-    public BaseResponse<MemberValid.Response> getMemberValid(@PathVariable Long memberId) {
-        ValidMemberDto memberDto = getMemberValidQuery.valid(memberId);
-        return MemberValid.Response.success(memberDto);
     }
 }
