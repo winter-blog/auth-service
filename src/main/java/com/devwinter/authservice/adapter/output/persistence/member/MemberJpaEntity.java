@@ -21,4 +21,5 @@ public class MemberJpaEntity {
     private String nickName;
     private String email;
     private String password;
+    private boolean deleted;
 }
