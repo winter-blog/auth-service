@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 @Repository
 @RequiredArgsConstructor
-public class JwtRedisRepositoryImpl implements JwtRedisRepository {
+public class RefreshTokenRedisRepositoryImpl implements JwtRedisRepository {
 
     private final RedisTemplate<String, Object> redisTemplate;
     @Value("${spring.redis.key.prefix}")
