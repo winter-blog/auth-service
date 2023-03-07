@@ -2,7 +2,6 @@ package com.devwinter.authservice.adapter.output.persistence.jwt;
 
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class RefreshTokenRedisRepositoryImpl implements JwtRedisRepository {
 
     private final RedisTemplate<String, Object> redisTemplate;
-    @Value("${spring.redis.key.prefix}")
-    private String redis_key_prefix;
+    private final static String REFRESH_TOKEN_KEY_PREFIX = "REFRESH-TOKEN";
 
     @Override
     public void save(String email, TokenDto tokenInfoDto) {
@@ -41,6 +39,6 @@ public class RefreshTokenRedisRepositoryImpl implements JwtRedisRepository {
     }
 
     private String createKey(String email) {
-        return String.format("%s: %s", redis_key_prefix, email);
+        return String.format("%s::%s", REFRESH_TOKEN_KEY_PREFIX, email);
     }
 }

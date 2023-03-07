@@ -6,10 +6,10 @@ import com.devwinter.authservice.application.port.input.AuthMemberUseCase;
 import com.devwinter.authservice.application.port.output.LoadMemberPort;
 import com.devwinter.authservice.domain.Member;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +19,7 @@ public class AuthMemberService implements AuthMemberUseCase {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    @Cacheable(value = "member", key = "#command.email()", cacheManager = "cacheManager")
+    @Cacheable(value = "MEMBER", key = "#command.email()", cacheManager = "cacheManager")
     public AuthMemberDto credential(AuthMemberCommand command) {
         Member member = loadMemberPort.findByEmail(command.email());
 
