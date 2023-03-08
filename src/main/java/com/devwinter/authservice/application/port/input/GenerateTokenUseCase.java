@@ -1,7 +1,7 @@
 package com.devwinter.authservice.application.port.input;
 
 
-import com.devwinter.authservice.application.port.input.AuthMemberUseCase.AuthMemberDto;
+import com.devwinter.authservice.application.dto.AuthMemberDto;
 import lombok.Builder;
 
 public interface GenerateTokenUseCase {

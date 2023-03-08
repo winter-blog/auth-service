@@ -1,6 +1,6 @@
 package com.devwinter.authservice.application.service;
 
-import com.devwinter.authservice.application.port.input.AuthMemberUseCase.AuthMemberDto;
+import com.devwinter.authservice.application.dto.AuthMemberDto;
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase;
 import com.devwinter.authservice.application.port.output.SaveRefreshTokenPort;
 import com.devwinter.authservice.utils.JwtTokenProvider;
