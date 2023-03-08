@@ -2,6 +2,7 @@ package com.devwinter.authservice.adapter.input.api;
 
 import com.devwinter.authservice.adapter.input.api.dto.BaseResponse;
 import com.devwinter.authservice.adapter.input.api.dto.MemberValid;
+import com.devwinter.authservice.application.dto.AuthMemberDto;
 import com.devwinter.authservice.application.port.input.GetMemberValidQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ public class MemberValidApiController {
 
     @GetMapping("/{memberId}/valid")
     public BaseResponse<MemberValid.Response> getMemberValid(@PathVariable Long memberId) {
-        GetMemberValidQuery.ValidMemberDto memberDto = getMemberValidQuery.valid(memberId);
+        AuthMemberDto memberDto = getMemberValidQuery.valid(memberId);
         return MemberValid.Response.success(memberDto);
     }
 }
