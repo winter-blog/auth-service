@@ -4,7 +4,9 @@ import com.devwinter.authservice.application.exception.AuthException;
 import com.devwinter.authservice.application.port.input.DeleteRefreshTokenUseCase;
 import com.devwinter.authservice.application.port.output.DeleteRefreshTokenPort;
 import com.devwinter.authservice.application.port.output.ExistRefreshTokenPort;
+import com.devwinter.authservice.common.CacheKey;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 
@@ -18,11 +20,12 @@ public class DeleteRefreshTokenService implements DeleteRefreshTokenUseCase {
     private final DeleteRefreshTokenPort deleteRefreshTokenPort;
 
     @Override
-    public void delete(String key) {
-        if(!existRefreshTokenPort.exist(key)) {
+    @CacheEvict(value = CacheKey.MEMBER, key = "#email")
+    public void delete(String email) {
+        if(!existRefreshTokenPort.exist(email)) {
             throw new AuthException(LOGOUT_ALREADY_STATUS);
         }
 
-        deleteRefreshTokenPort.delete(key);
+        deleteRefreshTokenPort.delete(email);
     }
 }

@@ -1,6 +1,6 @@
 package com.devwinter.authservice.application.port.input;
 
-import com.devwinter.authservice.application.dto.AuthMemberDto;
+import com.devwinter.authservice.domain.Member;
 
 public interface AuthMemberUseCase {
 
@@ -10,5 +10,10 @@ public interface AuthMemberUseCase {
 
     }
 
+    record AuthMemberDto(Long id, String email) {
+        public static AuthMemberDto of(Member member) {
+            return new AuthMemberDto(member.getId(), member.getEmail());
+        }
+    }
 
 }

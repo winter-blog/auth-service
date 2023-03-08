@@ -1,13 +1,11 @@
 package com.devwinter.authservice.application.service;
 
-import com.devwinter.authservice.application.dto.AuthMemberDto;
 import com.devwinter.authservice.application.exception.AuthErrorCode;
 import com.devwinter.authservice.application.exception.AuthException;
 import com.devwinter.authservice.application.port.input.AuthMemberUseCase;
 import com.devwinter.authservice.application.port.output.LoadMemberPort;
 import com.devwinter.authservice.domain.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,6 @@ public class AuthMemberService implements AuthMemberUseCase {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    @CachePut(value = "MEMBER", key = "#result.id()", cacheManager = "cacheManager")
     public AuthMemberDto credential(AuthMemberCommand command) {
         Member member = loadMemberPort.findByEmail(command.email());
 

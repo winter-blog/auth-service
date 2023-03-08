@@ -4,8 +4,8 @@ import com.devwinter.authservice.adapter.input.api.dto.AccessTokenIssuance;
 import com.devwinter.authservice.adapter.input.api.dto.BaseResponse;
 import com.devwinter.authservice.adapter.input.api.dto.MemberLogin;
 import com.devwinter.authservice.adapter.input.api.dto.MemberLogout;
-import com.devwinter.authservice.application.dto.AuthMemberDto;
 import com.devwinter.authservice.application.port.input.AuthMemberUseCase;
+import com.devwinter.authservice.application.port.input.AuthMemberUseCase.AuthMemberDto;
 import com.devwinter.authservice.application.port.input.DeleteRefreshTokenUseCase;
 import com.devwinter.authservice.application.port.input.ExistRefreshTokenValidUseCase;
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase;
@@ -42,7 +42,8 @@ public class AuthApiController {
     }
 
     @PostMapping("/logout")
-    public BaseResponse<MemberLogout.Response> logout(@RequestHeader("Email") String email) {
+    public BaseResponse<MemberLogout.Response> logout(
+            @RequestHeader("Email") String email) {
         deleteRefreshTokenUseCase.delete(email);
         return MemberLogout.Response.success();
     }
