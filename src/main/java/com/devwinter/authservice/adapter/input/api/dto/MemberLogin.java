@@ -1,6 +1,6 @@
 package com.devwinter.authservice.adapter.input.api.dto;
 
-import com.devwinter.authservice.application.port.input.AuthMemberUseCase;
+import com.devwinter.authservice.application.port.input.LoginMemberUseCase;
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,8 +13,8 @@ public class MemberLogin {
         private String password;
 
 
-        public AuthMemberUseCase.AuthMemberCommand toCommand() {
-            return new AuthMemberUseCase.AuthMemberCommand(email, password);
+        public LoginMemberUseCase.AuthMemberCommand toCommand() {
+            return new LoginMemberUseCase.AuthMemberCommand(email, password);
         }
     }
 

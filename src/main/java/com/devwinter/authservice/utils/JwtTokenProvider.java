@@ -1,7 +1,6 @@
 package com.devwinter.authservice.utils;
 
-import com.devwinter.authservice.application.port.input.AuthMemberUseCase;
-import com.devwinter.authservice.application.port.input.AuthMemberUseCase.AuthMemberDto;
+import com.devwinter.authservice.application.port.input.LoginMemberUseCase.AuthMemberDto;
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

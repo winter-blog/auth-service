@@ -2,7 +2,7 @@ package com.devwinter.authservice.application.port.input;
 
 import com.devwinter.authservice.domain.Member;
 
-public interface AuthMemberUseCase {
+public interface LoginMemberUseCase {
 
     AuthMemberDto credential(AuthMemberCommand command);
 

@@ -2,7 +2,7 @@ package com.devwinter.authservice.application.service;
 
 import com.devwinter.authservice.application.exception.AuthErrorCode;
 import com.devwinter.authservice.application.exception.AuthException;
-import com.devwinter.authservice.application.port.input.AuthMemberUseCase;
+import com.devwinter.authservice.application.port.input.LoginMemberUseCase;
 import com.devwinter.authservice.application.port.output.LoadMemberPort;
 import com.devwinter.authservice.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthMemberService implements AuthMemberUseCase {
+public class LoginMemberService implements LoginMemberUseCase {
 
     private final LoadMemberPort loadMemberPort;
     private final PasswordEncoder passwordEncoder;
