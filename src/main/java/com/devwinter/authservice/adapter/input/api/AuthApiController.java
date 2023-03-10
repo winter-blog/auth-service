@@ -4,9 +4,9 @@ import com.devwinter.authservice.adapter.input.api.dto.AccessTokenIssuance;
 import com.devwinter.authservice.adapter.input.api.dto.BaseResponse;
 import com.devwinter.authservice.adapter.input.api.dto.MemberLogin;
 import com.devwinter.authservice.adapter.input.api.dto.MemberLogout;
-import com.devwinter.authservice.application.port.input.AuthMemberUseCase;
-import com.devwinter.authservice.application.port.input.AuthMemberUseCase.AuthMemberDto;
-import com.devwinter.authservice.application.port.input.DeleteRefreshTokenUseCase;
+import com.devwinter.authservice.application.port.input.LoginMemberUseCase;
+import com.devwinter.authservice.application.port.input.LoginMemberUseCase.AuthMemberDto;
+import com.devwinter.authservice.application.port.input.LogoutMemberUseCase;
 import com.devwinter.authservice.application.port.input.ExistRefreshTokenValidUseCase;
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase;
 import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.TokenDto;
@@ -23,14 +23,14 @@ import java.util.Objects;
 @RestController
 @RequiredArgsConstructor
 public class AuthApiController {
-    private final AuthMemberUseCase authMemberUseCase;
+    private final LoginMemberUseCase loginMemberUseCase;
     private final GenerateTokenUseCase generateTokenUseCase;
-    private final DeleteRefreshTokenUseCase deleteRefreshTokenUseCase;
+    private final LogoutMemberUseCase logoutMemberUseCase;
     private final ExistRefreshTokenValidUseCase existRefreshTokenValidUseCase;
 
     @PostMapping("/login")
     public BaseResponse<MemberLogin.Response> login(HttpServletResponse response, @Valid @RequestBody MemberLogin.Request request) {
-        AuthMemberDto credential = authMemberUseCase.credential(request.toCommand());
+        AuthMemberDto credential = loginMemberUseCase.credential(request.toCommand());
         TokenDto tokenDto = generateTokenUseCase.generate(credential);
 
         if (Objects.nonNull(tokenDto.memberId())) {
@@ -44,7 +44,7 @@ public class AuthApiController {
     @PostMapping("/logout")
     public BaseResponse<MemberLogout.Response> logout(
             @RequestHeader("Email") String email) {
-        deleteRefreshTokenUseCase.delete(email);
+        logoutMemberUseCase.logout(email);
         return MemberLogout.Response.success();
     }
 

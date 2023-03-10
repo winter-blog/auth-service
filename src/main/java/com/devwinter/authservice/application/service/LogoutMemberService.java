@@ -1,7 +1,7 @@
 package com.devwinter.authservice.application.service;
 
 import com.devwinter.authservice.application.exception.AuthException;
-import com.devwinter.authservice.application.port.input.DeleteRefreshTokenUseCase;
+import com.devwinter.authservice.application.port.input.LogoutMemberUseCase;
 import com.devwinter.authservice.application.port.output.DeleteRefreshTokenPort;
 import com.devwinter.authservice.application.port.output.ExistRefreshTokenPort;
 import com.devwinter.authservice.common.CacheKey;
@@ -14,14 +14,14 @@ import static com.devwinter.authservice.application.exception.AuthErrorCode.LOGO
 
 @Service
 @RequiredArgsConstructor
-public class DeleteRefreshTokenService implements DeleteRefreshTokenUseCase {
+public class LogoutMemberService implements LogoutMemberUseCase {
 
     private final ExistRefreshTokenPort existRefreshTokenPort;
     private final DeleteRefreshTokenPort deleteRefreshTokenPort;
 
     @Override
     @CacheEvict(value = CacheKey.MEMBER, key = "#email")
-    public void delete(String email) {
+    public void logout(String email) {
         if(!existRefreshTokenPort.exist(email)) {
             throw new AuthException(LOGOUT_ALREADY_STATUS);
         }
