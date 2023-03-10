@@ -30,8 +30,7 @@ public class AuthApiController {
 
     @PostMapping("/login")
     public BaseResponse<MemberLogin.Response> login(HttpServletResponse response, @Valid @RequestBody MemberLogin.Request request) {
-        AuthMemberDto credential = loginMemberUseCase.credential(request.toCommand());
-        TokenDto tokenDto = generateTokenUseCase.generate(credential);
+        TokenDto tokenDto = loginMemberUseCase.credential(request.toCommand());
 
         if (Objects.nonNull(tokenDto.memberId())) {
             response.setHeader("MemberId", tokenDto.memberId()

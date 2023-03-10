@@ -4,7 +4,7 @@ import com.devwinter.authservice.domain.Member;
 
 public interface LoginMemberUseCase {
 
-    AuthMemberDto credential(AuthMemberCommand command);
+    GenerateTokenUseCase.TokenDto credential(AuthMemberCommand command);
 
     record AuthMemberCommand(String email, String password) {
 
