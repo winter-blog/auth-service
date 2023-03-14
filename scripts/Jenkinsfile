@@ -50,11 +50,11 @@ pipeline {
 
          stage("Deploy to EC2") {
             steps {
-                  sh "$SSH_CMD $REMOTE 'docker pull $repository'"
-                  sh "$SSH_CMD $REMOTE 'docker stop $DOCKER_CONTAINER_NAME || true'"
-                  sh "$SSH_CMD $REMOTE 'docker rm $DOCKER_CONTAINER_NAME || true'"
+                  sh "$SSH_CMD 'docker pull $repository'"
+                  sh "$SSH_CMD 'docker stop $DOCKER_CONTAINER_NAME || true'"
+                  sh "$SSH_CMD 'docker rm $DOCKER_CONTAINER_NAME || true'"
                   sh "$SSH_CMD $REMOTE 'docker run -d --name $DOCKER_CONTAINER_NAME $NETWORK $PROFILE -p $INTERNAL_PORT $ENV_FILE $repository'"
-                  sh "$SSH_CMD $REMOTE 'docker images -qf dangling=true | xargs -I{} docker rmi {}'"
+                  sh "$SSH_CMD 'docker images -qf dangling=true | xargs -I{} docker rmi {}'"
             }
          }
 
