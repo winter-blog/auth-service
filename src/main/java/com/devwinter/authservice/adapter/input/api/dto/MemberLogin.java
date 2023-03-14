@@ -5,13 +5,15 @@ import com.devwinter.authservice.application.port.input.GenerateTokenUseCase.Tok
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class MemberLogin {
     @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Request {
         private String email;
         private String password;
-
 
         public LoginMemberUseCase.AuthMemberCommand toCommand() {
             return new LoginMemberUseCase.AuthMemberCommand(email, password);

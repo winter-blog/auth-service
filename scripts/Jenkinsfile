@@ -11,9 +11,14 @@ pipeline {
 
         INTERNAL_PORT = 9001
         PROFILE='-e "SPRING_PROFILES_ACTIVE=prod"'
-        SSH_CMD = 'ssh -i /var/lib/jenkins/.ssh/jenkins.pem ubuntu@3.34.53.11'
+        REMOTE = 'ubuntu@3.34.53.11'
+        SSH_CMD = 'ssh -i /var/lib/jenkins/.ssh/jenkins.pem'
         ENV_FILE = '--env-file=./env/auth-service.env'
         NETWORK = '--net winter-blog-network'
+
+        SCP_CMD = 'scp -i /var/lib/jenkins/.ssh/jenkins.pem'
+        SOURCE_FILE = 'build/api-spec/auth-api-spec.yaml'
+        TARGET_DIRECTORY = ':docs'
     }
 
     stages {
@@ -48,8 +53,15 @@ pipeline {
                   sh "$SSH_CMD 'docker pull $repository'"
                   sh "$SSH_CMD 'docker stop $DOCKER_CONTAINER_NAME || true'"
                   sh "$SSH_CMD 'docker rm $DOCKER_CONTAINER_NAME || true'"
-                  sh "$SSH_CMD 'docker run -d --name $DOCKER_CONTAINER_NAME $NETWORK $PROFILE -p $INTERNAL_PORT $ENV_FILE $repository'"
+                  sh "$SSH_CMD $REMOTE 'docker run -d --name $DOCKER_CONTAINER_NAME $NETWORK $PROFILE -p $INTERNAL_PORT $ENV_FILE $repository'"
                   sh "$SSH_CMD 'docker images -qf dangling=true | xargs -I{} docker rmi {}'"
+            }
+         }
+
+         stage('Deploy to EC2 api docs') {
+            steps {
+               sh "pwd | xargs echo Current directory:"
+               sh "$SCP_CMD $SOURCE_FILE $REMOTE$TARGET_DIRECTORY"
             }
          }
     }
