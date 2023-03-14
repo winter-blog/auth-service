@@ -39,6 +39,15 @@ pipeline {
             }
         }
 
+        stage('Open Api 3') {
+          steps {
+               sh "chmod +x gradlew"
+               sh """
+               ./gradlew openapi3
+               """
+            }
+          }
+
         stage("Dockerize") {
             steps {
                 sh "docker build -t $repository ."
