@@ -52,5 +52,12 @@ pipeline {
                   sh "$SSH_CMD 'docker images -qf dangling=true | xargs -I{} docker rmi {}'"
             }
          }
+
+         stage('Deploy to EC2 api docs') {
+            steps {
+               sh "pwd | xargs echo Current directory:"
+               sh "$SCP_CMD $SOURCE_FILE $REMOTE$TARGET_DIRECTORY"
+            }
+         }
     }
 }

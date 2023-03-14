@@ -1,7 +1,16 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0:jakarta"
+        restdocsApiSpecVersion = "0.16.2"
+    }
+}
+
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.8'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
 }
 
 group = 'com.devwinter'
@@ -49,6 +58,10 @@ dependencies {
 
     // kafka
     implementation 'org.springframework.kafka:spring-kafka'
+
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation "com.epages:restdocs-api-spec-mockmvc:${restdocsApiSpecVersion}"
+    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 dependencyManagement {
@@ -59,4 +72,13 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+openapi3 {
+    setServer("http://ec2-3-34-53-11.ap-northeast-2.compute.amazonaws.com:8080/auth-service/")
+    title = "인증 서비스 API"
+    description = "인증 서비스 API 문서"
+    version = "v1"
+    format = "yaml"
+    outputFileNamePrefix = 'auth-api-spec'
 }
