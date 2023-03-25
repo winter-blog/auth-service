@@ -11,7 +11,7 @@ pipeline {
 
         INTERNAL_PORT = 9001
         PROFILE='-e "SPRING_PROFILES_ACTIVE=prod"'
-        REMOTE = 'ubuntu@3.34.53.11'
+        REMOTE = 'ubuntu@3.39.159.26'
         SSH_CMD = 'ssh -i /var/lib/jenkins/.ssh/jenkins.pem'
         ENV_FILE = '--env-file=./env/auth-service.env'
         NETWORK = '--net winter-blog-network'
