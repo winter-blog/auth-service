@@ -6,17 +6,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.KafkaListener;
+// import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
+// @Component
 @RequiredArgsConstructor
 public class PasswordChangeEventConsumer {
     private final ObjectMapper objectMapper;
     private final LogoutMemberUseCase logoutMemberUseCase;
 
-    @KafkaListener(topics = "member-change-password")
+    // @KafkaListener(topics = "member-change-password")
     public void logout(String kafkaMessage) {
         log.info("Kafka Message ->: {}", kafkaMessage);
 
