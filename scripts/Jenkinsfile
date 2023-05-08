@@ -19,6 +19,8 @@ pipeline {
         SCP_CMD = 'scp -i /var/lib/jenkins/.ssh/jenkins.pem'
         SOURCE_FILE = 'build/api-spec/auth-api-spec.yaml'
         TARGET_DIRECTORY = ':docs'
+
+        DISCORD_WEBHOOK_URL = credentials("discord_webhook")
     }
 
     stages {
@@ -74,4 +76,21 @@ pipeline {
             }
          }
     }
+
+     post {
+            success {
+                discordSend title: "Auth Service CI/CD 알림",
+                            description: "auth-service CI/CD 결과",
+                            footer: "auth-service 빌드 및 배포에 성공했습니다.",
+                            link: env.BUILD_URL, result: currentBuild.currentResult,
+                            webhookURL: env.DISCORD_WEBHOOK_URL
+            }
+            failure {
+                discordSend title: "Auth Service CI/CD 알림",
+                            description: "auth-service CI/CD 결과",
+                            footer: "auth-service 빛드 및 배포에 실패했습니다.",
+                            link: env.BUILD_URL, result: currentBuild.currentResult,
+                            webhookURL: env.DISCORD_WEBHOOK_URL
+            }
+     }
 }
